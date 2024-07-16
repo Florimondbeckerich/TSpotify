@@ -191,10 +191,10 @@ const songArtist = document.getElementById('song-artist');
 function togglePlayPause() {
     if (isPlaying) {
         audio.pause();
-        playButton.innerHTML = '&#9654;'; // Icône de lecture
+        playButton.innerHTML = '&#9654;'; // Play icon
     } else {
         audio.play();
-        playButton.innerHTML = '&#10074;&#10074;'; // Icône de pause
+        playButton.innerHTML = '&#10074;&#10074;'; // Pause icon
     }
     isPlaying = !isPlaying;
 }
@@ -213,7 +213,7 @@ function changeSong() {
     audio.src = songs[currentSongIndex].file;
     audio.load();
     audio.play();
-    playButton.innerHTML = '&#10074;&#10074;'; // Icône de pause
+    playButton.innerHTML = '&#10074;&#10074;'; // Pause icon
     isPlaying = true;
     updateSongInfo();
 }
@@ -241,6 +241,8 @@ audio.addEventListener('loadedmetadata', () => {
     totalTimeDisplay.textContent = formatTime(audio.duration);
 });
 
+audio.addEventListener('ended', nextSong);
+
 function formatTime(seconds) {
     const minutes = Math.floor(seconds / 60);
     const secs = Math.floor(seconds % 60);
@@ -255,11 +257,11 @@ function updateClock() {
     clockDisplay.textContent = `${hours < 10 ? '0' : ''}${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
-// Mettre à jour l'heure chaque seconde
+// Update clock every second
 setInterval(updateClock, 1000);
 
-// Initialiser l'heure
+// Initialize the clock
 updateClock();
 
-// Initialiser les informations de la première chanson
+// Initialize the first song information
 updateSongInfo();
